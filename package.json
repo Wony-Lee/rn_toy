@@ -30,5 +30,16 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "eslintConfig": {
+    "rules": {
+      "prettier/prettier": [
+        "errors",
+        {
+          "singleQuote": true,
+          "semi": false
+        }
+      ]
+    }
   }
 }
