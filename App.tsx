@@ -6,8 +6,9 @@
  * @flow strict-local
  */
 
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -16,20 +17,18 @@ import {
   useColorScheme,
   View,
 } from 'react-native'
+import Counter from './src/components/Counter'
+import SampleTable from './src/components/SampleTable'
+import MenuButton from './src/components/MenuButton'
 
-import {Colors} from 'react-native/Libraries/NewAppScreen'
-const App: React.FC = () => {
-  const isDarkMode = useColorScheme() === 'dark'
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  }
+interface Props {}
 
+const App: React.FC<Props> = ({}) => {
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView>
-        <Text>Hello World</Text>
-      </ScrollView>
+    <SafeAreaView>
+      {/*<Counter />*/}
+      <MenuButton />
+      <SampleTable />
     </SafeAreaView>
   )
 }
