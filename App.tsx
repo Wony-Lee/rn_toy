@@ -17,9 +17,10 @@ import {
   useColorScheme,
   View,
 } from 'react-native'
-import Counter from './src/components/Counter'
-import SampleTable from './src/components/SampleTable'
-import MenuButton from './src/components/MenuButton'
+
+import DataTables from './src/components/DataTable'
+import {bodyData} from './src/mock/sample'
+import {config} from './src/mock/mock.config'
 
 interface Props {}
 
@@ -27,8 +28,9 @@ const App: React.FC<Props> = ({}) => {
   return (
     <SafeAreaView>
       {/*<Counter />*/}
-      <MenuButton />
-      <SampleTable />
+      {/*<MenuButton />*/}
+      {/*<SampleTable />*/}
+      <DataTables data={bodyData} config={config as any} />
     </SafeAreaView>
   )
 }
