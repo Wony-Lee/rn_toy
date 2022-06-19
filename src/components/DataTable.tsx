@@ -15,9 +15,7 @@ interface Props {
   data: ISampleData[]
   config: IStyleMap[]
 }
-interface IStyleMap {
-  [index: string]: number | string
-}
+export interface IStyleMap extends ISampleData {}
 
 const DataTables: React.FC<Props> = ({data, config}) => {
   const [cloneData, setCloneData] = useState<ISampleData[]>([])
