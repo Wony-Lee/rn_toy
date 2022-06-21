@@ -21,6 +21,7 @@ import {
 import DataTables from './src/components/DataTable'
 import {bodyData} from './src/mock/sample'
 import {config} from './src/mock/mock.config'
+import BottomSheet from './src/components/bottomSheet/BottomSheet'
 
 interface Props {}
 
@@ -30,7 +31,8 @@ const App: React.FC<Props> = ({}) => {
       {/*<Counter />*/}
       {/*<MenuButton />*/}
       {/*<SampleTable />*/}
-      <DataTables data={bodyData} config={config as any} />
+      {/*<DataTables data={bodyData} config={config} />*/}
+      <BottomSheet />
     </SafeAreaView>
   )
 }
