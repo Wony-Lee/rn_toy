@@ -22,18 +22,22 @@ import DataTables from './src/components/DataTable'
 import {bodyData} from './src/mock/sample'
 import {config} from './src/mock/mock.config'
 import BottomSheet from './src/components/bottomSheet/BottomSheet'
+import {Provider} from 'react-redux'
+import store from './src/store'
 
 interface Props {}
 
 const App: React.FC<Props> = ({}) => {
   return (
-    <SafeAreaView>
-      {/*<Counter />*/}
-      {/*<MenuButton />*/}
-      {/*<SampleTable />*/}
-      {/*<DataTables data={bodyData} config={config} />*/}
-      <BottomSheet />
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView>
+        {/*<Counter />*/}
+        {/*<MenuButton />*/}
+        {/*<SampleTable />*/}
+        {/*<DataTables data={bodyData} config={config} />*/}
+        <BottomSheet />
+      </SafeAreaView>
+    </Provider>
   )
 }
 

@@ -10,8 +10,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import {useAppSelector} from '../../store'
 
 const BottomSheet: React.FC = () => {
+  const filterItem = useAppSelector(state => state.filterList.filterItem)
   const screenHeight = Dimensions.get('screen').height
   const showTansY = useRef(new Animated.Value(0)).current
   const backOpacity = useRef(new Animated.Value(0)).current
@@ -20,31 +22,31 @@ const BottomSheet: React.FC = () => {
     setIsActive(true)
     Animated.timing(showTansY, {
       toValue: 0,
-      duration: 300,
+      duration: 600,
       useNativeDriver: true,
       easing: Easing.ease,
     }).start()
     Animated.timing(backOpacity, {
       toValue: 1,
-      duration: 300,
+      duration: 600,
       useNativeDriver: true,
     }).start()
   }, [showTansY, backOpacity])
   const handleShowOut = useCallback(() => {
     Animated.timing(showTansY, {
       toValue: screenHeight,
-      duration: 300,
+      duration: 600,
       useNativeDriver: true,
     }).start(() => {
       setIsActive(false)
     })
     Animated.timing(backOpacity, {
       toValue: 0,
-      duration: 300,
+      duration: 600,
       useNativeDriver: true,
     }).start()
   }, [showTansY, screenHeight, backOpacity])
-
+  console.log(filterItem)
   return (
     <>
       <Button title={'ShowIn'} onPress={handleShowIn} />
@@ -53,10 +55,12 @@ const BottomSheet: React.FC = () => {
         <View style={styles.container}>
           <Animated.View style={{opacity: backOpacity}}>
             <TouchableOpacity style={styles.bg} onPress={handleShowOut} />
-
             <Animated.View style={[{transform: [{translateY: showTansY}]}]}>
               <ScrollView style={styles.filterBody}>
                 <Text style={styles.headTitle}>필터 변경</Text>
+                {filterItem.map(item => (
+                  <Text>{item.options[0].label}</Text>
+                ))}
                 <View>
                   <Text>container</Text>
                 </View>
