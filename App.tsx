@@ -18,25 +18,24 @@ import {
   View,
 } from 'react-native'
 
-import DataTables from './src/components/DataTable'
-import {bodyData} from './src/mock/sample'
-import {config} from './src/mock/mock.config'
-import BottomSheet from './src/components/bottomSheet/BottomSheet'
 import {Provider} from 'react-redux'
 import store from './src/store'
+import BottomSheetScreen from './src/screens/BottomSheetScreen'
+import {NavigationContainer} from '@react-navigation/native'
 
-interface Props {}
-
-const App: React.FC<Props> = ({}) => {
+const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <SafeAreaView>
+      <NavigationContainer>
+        {/*<SafeAreaView>*/}
         {/*<Counter />*/}
         {/*<MenuButton />*/}
         {/*<SampleTable />*/}
         {/*<DataTables data={bodyData} config={config} />*/}
-        <BottomSheet />
-      </SafeAreaView>
+        {/*<BottomSheetScreen />*/}
+        {/*</SafeAreaView>*/}
+        <BottomSheetScreen />
+      </NavigationContainer>
     </Provider>
   )
 }

@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native'
 import {useAppSelector} from '../../store'
+import FilterList from './FilterList'
 
 const BottomSheet: React.FC = () => {
   const filterItem = useAppSelector(state => state.filterList.filterItem)
@@ -53,23 +54,12 @@ const BottomSheet: React.FC = () => {
       <Button title={'ShowOut'} onPress={handleShowOut} />
       {isActive && (
         <View style={styles.container}>
+          <TouchableOpacity style={styles.bg} onPress={handleShowOut} />
           <Animated.View style={{opacity: backOpacity}}>
-            <TouchableOpacity style={styles.bg} onPress={handleShowOut} />
             <Animated.View style={[{transform: [{translateY: showTansY}]}]}>
               <ScrollView style={styles.filterBody}>
                 <Text style={styles.headTitle}>필터 변경</Text>
-                {filterItem.map(item => (
-                  <Text>{item.options[0].label}</Text>
-                ))}
-                <View>
-                  <Text>container</Text>
-                </View>
-                <View>
-                  <Text>Description?</Text>
-                </View>
-                <View>
-                  <Text>List</Text>
-                </View>
+                <FilterList />
               </ScrollView>
             </Animated.View>
           </Animated.View>
