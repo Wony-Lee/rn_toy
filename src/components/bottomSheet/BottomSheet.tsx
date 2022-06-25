@@ -11,9 +11,11 @@ import {
   View,
 } from 'react-native'
 import {useAppSelector} from '../../store'
-import FilterList from './FilterList'
+import FilterList from './SelectFilter'
+import SelectFilter from './SelectFilter'
 
 const BottomSheet: React.FC = () => {
+  const filterTwoDeps = useAppSelector(state => state.clientSide).filterTwoDeps
   const filterItem = useAppSelector(state => state.filterList.filterItem)
   const screenHeight = Dimensions.get('screen').height
   const showTansY = useRef(new Animated.Value(0)).current
@@ -29,7 +31,7 @@ const BottomSheet: React.FC = () => {
     }).start()
     Animated.timing(backOpacity, {
       toValue: 1,
-      duration: 600,
+      duration: 300,
       useNativeDriver: true,
     }).start()
   }, [showTansY, backOpacity])
@@ -43,7 +45,7 @@ const BottomSheet: React.FC = () => {
     })
     Animated.timing(backOpacity, {
       toValue: 0,
-      duration: 600,
+      duration: 300,
       useNativeDriver: true,
     }).start()
   }, [showTansY, screenHeight, backOpacity])
@@ -59,6 +61,7 @@ const BottomSheet: React.FC = () => {
             <Animated.View style={[{transform: [{translateY: showTansY}]}]}>
               <ScrollView style={styles.filterBody}>
                 <Text style={styles.headTitle}>필터 변경</Text>
+                {filterTwoDeps && <SelectFilter />}
                 <FilterList />
               </ScrollView>
             </Animated.View>
@@ -69,7 +72,7 @@ const BottomSheet: React.FC = () => {
   )
 }
 
-export default BottomSheet
+export default React.memo(BottomSheet)
 
 const styles = StyleSheet.create({
   container: {

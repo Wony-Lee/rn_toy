@@ -1,9 +1,11 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux'
 import filterSlice from '../reducers/filterReducer'
+import clientSideStateReducer from '../reducers/clientSideStateReducer'
 
 const rootReducers = combineReducers({
   filterList: filterSlice.reducer,
+  clientSide: clientSideStateReducer.reducer,
 })
 const initialState = {}
 
