@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 
 interface ConfigState {
   startDate?: string
@@ -26,14 +26,23 @@ interface FiltersState {
 
 export interface FilterState {
   filterItem?: FiltersState[]
+  selectItem: string
 }
 
-const initialState: FilterState = {}
+const initialState: FilterState = {
+  selectItem: '',
+}
 
 export const filterSlice = createSlice({
   name: 'filterList',
   initialState,
-  reducers: {},
+  reducers: {
+    setFilterSelectItem(state, action: PayloadAction<string>) {
+      state.selectItem = action.payload
+    },
+  },
 })
+
+export const {setFilterSelectItem} = filterSlice.actions
 
 export default filterSlice

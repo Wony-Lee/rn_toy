@@ -10,11 +10,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import {useAppSelector} from '../../store'
-import FilterList from './SelectFilter'
+import {useAppDispatch, useAppSelector} from '../../store'
+import FilterList from './FilterList'
 import SelectFilter from './SelectFilter'
+import {setFilterTwoDepsSwitch} from '../../reducers/clientSideStateReducer'
 
 const BottomSheet: React.FC = () => {
+  const dispatch = useAppDispatch()
   const filterTwoDeps = useAppSelector(state => state.clientSide).filterTwoDeps
   const filterItem = useAppSelector(state => state.filterList.filterItem)
   const screenHeight = Dimensions.get('screen').height
@@ -50,6 +52,11 @@ const BottomSheet: React.FC = () => {
     }).start()
   }, [showTansY, screenHeight, backOpacity])
   console.log(filterItem)
+
+  const handleShowSwipeOut = useCallback(() => {
+    dispatch(setFilterTwoDepsSwitch(false))
+  }, [dispatch])
+
   return (
     <>
       <Button title={'ShowIn'} onPress={handleShowIn} />
@@ -59,10 +66,14 @@ const BottomSheet: React.FC = () => {
           <TouchableOpacity style={styles.bg} onPress={handleShowOut} />
           <Animated.View style={{opacity: backOpacity}}>
             <Animated.View style={[{transform: [{translateY: showTansY}]}]}>
+              {filterTwoDeps && (
+                <SelectFilter title={'a'} handleOut={handleShowSwipeOut} />
+              )}
               <ScrollView style={styles.filterBody}>
-                <Text style={styles.headTitle}>필터 변경</Text>
-                {filterTwoDeps && <SelectFilter />}
-                <FilterList />
+                <Text style={styles.headTitle} onPress={handleShowSwipeOut}>
+                  필터 변경
+                </Text>
+                <FilterList title={'sample 1'} />
               </ScrollView>
             </Animated.View>
           </Animated.View>
@@ -75,12 +86,10 @@ const BottomSheet: React.FC = () => {
 export default React.memo(BottomSheet)
 
 const styles = StyleSheet.create({
-  container: {
-    // display: 'flex',
-  },
+  container: {},
   bg: {
-    backgroundColor: 'rgba(0,0,0,0.5)',
     height: '100%',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   filterBody: {
     position: 'absolute',
@@ -90,9 +99,10 @@ const styles = StyleSheet.create({
     height: 450,
     padding: 16,
 
+    backgroundColor: 'white',
+
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    backgroundColor: 'white',
   },
   headTitle: {
     fontSize: 22,

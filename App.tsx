@@ -22,6 +22,7 @@ import {Provider} from 'react-redux'
 import store from './src/store'
 import BottomSheetScreen from './src/screens/BottomSheetScreen'
 import {NavigationContainer} from '@react-navigation/native'
+import BottomSheet from './src/components/bottomSheet/BottomSheet'
 
 const App: React.FC = () => {
   return (
@@ -34,7 +35,7 @@ const App: React.FC = () => {
         {/*<DataTables data={bodyData} config={config} />*/}
         {/*<BottomSheetScreen />*/}
         {/*</SafeAreaView>*/}
-        <BottomSheetScreen />
+        <BottomSheet />
       </NavigationContainer>
     </Provider>
   )
