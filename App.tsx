@@ -23,19 +23,13 @@ import store from './src/store'
 import BottomSheetScreen from './src/screens/BottomSheetScreen'
 import {NavigationContainer} from '@react-navigation/native'
 import BottomSheet from './src/components/bottomSheet/BottomSheet'
+import {sampleData} from './src/components/bottomSheet/sampleData'
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        {/*<SafeAreaView>*/}
-        {/*<Counter />*/}
-        {/*<MenuButton />*/}
-        {/*<SampleTable />*/}
-        {/*<DataTables data={bodyData} config={config} />*/}
-        {/*<BottomSheetScreen />*/}
-        {/*</SafeAreaView>*/}
-        <BottomSheet />
+        <BottomSheet list={sampleData.state} title={sampleData.title} />
       </NavigationContainer>
     </Provider>
   )

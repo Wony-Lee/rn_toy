@@ -14,11 +14,19 @@ import {useAppDispatch, useAppSelector} from '../../store'
 import FilterList from './FilterList'
 import SelectFilter from './SelectFilter'
 import {setFilterTwoDepsSwitch} from '../../reducers/clientSideStateReducer'
+import {SampleStateData} from './interface'
 
-const BottomSheet: React.FC = () => {
+interface Props {
+  title: string
+  list: SampleStateData[]
+}
+
+const BottomSheet: React.FC<Props> = ({list, title}) => {
   const dispatch = useAppDispatch()
   const filterTwoDeps = useAppSelector(state => state.clientSide).filterTwoDeps
   const filterItem = useAppSelector(state => state.filterList.filterItem)
+  const selectItem = useAppSelector(state => state.filterList.selectItem)
+
   const screenHeight = Dimensions.get('screen').height
   const showTansY = useRef(new Animated.Value(0)).current
   const backOpacity = useRef(new Animated.Value(0)).current
@@ -53,6 +61,17 @@ const BottomSheet: React.FC = () => {
   }, [showTansY, screenHeight, backOpacity])
   console.log(filterItem)
 
+  const changeValue = (param: SampleStateData) => {
+    const item = selectItem[param.key!]
+
+    if (param?.list?.length > 0) {
+      const list = param.list.filter((d: any) => d.select === item)
+      return list[0]?.label
+    }
+
+    return ''
+  }
+
   const handleShowSwipeOut = useCallback(() => {
     dispatch(setFilterTwoDepsSwitch(false))
   }, [dispatch])
@@ -70,10 +89,18 @@ const BottomSheet: React.FC = () => {
                 <SelectFilter title={'a'} handleOut={handleShowSwipeOut} />
               )}
               <ScrollView style={styles.filterBody}>
-                <Text style={styles.headTitle} onPress={handleShowSwipeOut}>
-                  필터 변경
-                </Text>
-                <FilterList title={'sample 1'} />
+                <View style={{marginBottom: 16}}>
+                  <Text style={styles.headTitle} onPress={handleShowSwipeOut}>
+                    {title}
+                  </Text>
+                </View>
+                {list.map((item, idx) => (
+                  <FilterList
+                    key={idx}
+                    title={item.label}
+                    subTitle={changeValue(item)}
+                  />
+                ))}
               </ScrollView>
             </Animated.View>
           </Animated.View>
@@ -97,7 +124,7 @@ const styles = StyleSheet.create({
 
     width: '100%',
     height: 450,
-    padding: 16,
+    padding: 25,
 
     backgroundColor: 'white',
 
@@ -107,5 +134,9 @@ const styles = StyleSheet.create({
   headTitle: {
     fontSize: 22,
     fontWeight: '700',
+  },
+  itemText: {
+    fontSize: 16,
+    color: 'black',
   },
 })

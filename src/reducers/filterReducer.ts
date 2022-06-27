@@ -24,20 +24,27 @@ interface FiltersState {
   options: FilterOptions[]
 }
 
+interface FilterSelectItem {
+  [key: string]: string | number
+}
+
 export interface FilterState {
   filterItem?: FiltersState[]
-  selectItem: string
+  selectItem: FilterSelectItem
 }
 
 const initialState: FilterState = {
-  selectItem: '',
+  selectItem: {
+    don_id: 'donsa1',
+    don_bang: 'donbang1',
+  },
 }
 
 export const filterSlice = createSlice({
   name: 'filterList',
   initialState,
   reducers: {
-    setFilterSelectItem(state, action: PayloadAction<string>) {
+    setFilterSelectItem(state, action: PayloadAction<FilterSelectItem>) {
       state.selectItem = action.payload
     },
   },

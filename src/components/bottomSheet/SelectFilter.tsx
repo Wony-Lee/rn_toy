@@ -12,14 +12,16 @@ interface Props {
 
 const SelectFilter: React.FC<Props> = ({title, handleOut}) => {
   const filterTwoDeps = useAppSelector(state => state.clientSide).filterTwoDeps
+  const selectItem = useAppSelector(state => state.filterList).selectItem
   const dispatch = useAppDispatch()
   const handleOnShowIn = useCallback(() => {}, [])
 
   const handleSwipeOn = useCallback(() => {}, [])
-  const handleSwipeOut = useCallback(
+  const handleSlideOut = useCallback(
     (title?: string) => {
       console.log(title)
-      dispatch(setFilterSelectItem(title!))
+
+      // dispatch(setFilterSelectItem(title!))
       dispatch(setFilterTwoDepsSwitch(true))
     },
     [dispatch],
@@ -27,8 +29,10 @@ const SelectFilter: React.FC<Props> = ({title, handleOut}) => {
 
   return (
     <Animated.View style={styles.container}>
-      <Text onPress={handleOut}>닫기</Text>
-      <Text style={styles.text} onPress={() => handleSwipeOut(title)}>
+      <Text style={styles.header} onPress={handleOut}>
+        닫기
+      </Text>
+      <Text style={styles.text} onPress={() => handleSlideOut(title)}>
         {title}
       </Text>
     </Animated.View>
@@ -43,11 +47,19 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: '100%',
     height: 450,
-    backgroundColor: 'red',
+    padding: 25,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
     zIndex: 1,
   },
   text: {
     fontSize: 16,
+    color: 'black',
+  },
+  header: {
+    fontSize: 22,
+    fontWeight: '700',
     color: 'black',
   },
 })
