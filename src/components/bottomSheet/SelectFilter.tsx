@@ -1,25 +1,34 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import {StyleSheet, Text, View} from 'react-native'
 import {Animated} from 'react-native'
 import {useAppDispatch, useAppSelector} from '../../store'
-import {setFilterSelectItem} from '../../reducers/filterReducer'
+import {
+  setFilterOneDepsTitle,
+  setFilterSelectItem,
+} from '../../reducers/filterReducer'
 import {setFilterTwoDepsSwitch} from '../../reducers/clientSideStateReducer'
+import {SampleListData} from './interface'
 
 interface Props {
-  title: string
+  title?: string
   handleOut?: () => void
+  list?: SampleListData[]
 }
 
-const SelectFilter: React.FC<Props> = ({title, handleOut}) => {
+const SelectFilter: React.FC<Props> = ({title, handleOut, list}) => {
+  console.log('select Filter =>', list, ' ==== title >', title)
   const filterTwoDeps = useAppSelector(state => state.clientSide).filterTwoDeps
   const selectItem = useAppSelector(state => state.filterList).selectItem
+  const filterOneDepsTitle = useAppSelector(
+    state => state.filterList,
+  ).filterOneDepsTitle
   const dispatch = useAppDispatch()
   const handleOnShowIn = useCallback(() => {}, [])
 
   const handleSwipeOn = useCallback(() => {}, [])
   const handleSlideOut = useCallback(
     (title?: string) => {
-      console.log(title)
+      console.log('title=>', title)
 
       // dispatch(setFilterSelectItem(title!))
       dispatch(setFilterTwoDepsSwitch(true))
@@ -27,14 +36,23 @@ const SelectFilter: React.FC<Props> = ({title, handleOut}) => {
     [dispatch],
   )
 
+  useEffect(() => {
+    setFilterOneDepsTitle(title!)
+  }, [title])
+  console.log('filterOneDepsTitle', filterOneDepsTitle)
   return (
     <Animated.View style={styles.container}>
       <Text style={styles.header} onPress={handleOut}>
         닫기
       </Text>
-      <Text style={styles.text} onPress={() => handleSlideOut(title)}>
-        {title}
-      </Text>
+      {list?.map((item, idx) => (
+        <Text
+          key={idx}
+          style={styles.text}
+          onPress={() => handleSlideOut(title)}>
+          {item.label}
+        </Text>
+      ))}
     </Animated.View>
   )
 }

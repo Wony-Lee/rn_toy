@@ -85,9 +85,15 @@ const BottomSheet: React.FC<Props> = ({list, title}) => {
           <TouchableOpacity style={styles.bg} onPress={handleShowOut} />
           <Animated.View style={{opacity: backOpacity}}>
             <Animated.View style={[{transform: [{translateY: showTansY}]}]}>
-              {filterTwoDeps && (
-                <SelectFilter title={'a'} handleOut={handleShowSwipeOut} />
-              )}
+              {filterTwoDeps &&
+                list.map((item, idx) => (
+                  <SelectFilter
+                    key={idx}
+                    title={item.label}
+                    list={item.list}
+                    handleOut={handleShowSwipeOut}
+                  />
+                ))}
               <ScrollView style={styles.filterBody}>
                 <View style={{marginBottom: 16}}>
                   <Text style={styles.headTitle} onPress={handleShowSwipeOut}>

@@ -31,9 +31,11 @@ interface FilterSelectItem {
 export interface FilterState {
   filterItem?: FiltersState[]
   selectItem: FilterSelectItem
+  filterOneDepsTitle: string
 }
 
 const initialState: FilterState = {
+  filterOneDepsTitle: '',
   selectItem: {
     don_id: 'donsa1',
     don_bang: 'donbang1',
@@ -47,9 +49,12 @@ export const filterSlice = createSlice({
     setFilterSelectItem(state, action: PayloadAction<FilterSelectItem>) {
       state.selectItem = action.payload
     },
+    setFilterOneDepsTitle(state, action: PayloadAction<string>) {
+      state.filterOneDepsTitle = action.payload
+    },
   },
 })
 
-export const {setFilterSelectItem} = filterSlice.actions
+export const {setFilterSelectItem, setFilterOneDepsTitle} = filterSlice.actions
 
 export default filterSlice
