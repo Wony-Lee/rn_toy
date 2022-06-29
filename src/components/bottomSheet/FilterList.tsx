@@ -1,6 +1,9 @@
 import React, {useCallback} from 'react'
 import {StyleSheet, Text, View} from 'react-native'
-import {setFilterSelectItem} from '../../reducers/filterReducer'
+import {
+  setFilterOneDepsTitle,
+  setFilterSelectItem,
+} from '../../reducers/filterReducer'
 import {setFilterTwoDepsSwitch} from '../../reducers/clientSideStateReducer'
 import {useAppDispatch, useAppSelector} from '../../store'
 
@@ -17,6 +20,7 @@ const FilterList: React.FC<Props> = ({title, subTitle}) => {
       console.log(title)
       // dispatch(setFilterSelectItem(title))
       dispatch(setFilterTwoDepsSwitch(true))
+      dispatch(setFilterOneDepsTitle(title!))
     },
     [dispatch],
   )

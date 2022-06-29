@@ -24,6 +24,9 @@ interface Props {
 const BottomSheet: React.FC<Props> = ({list, title}) => {
   const dispatch = useAppDispatch()
   const filterTwoDeps = useAppSelector(state => state.clientSide).filterTwoDeps
+  const filterOneDepsTitle = useAppSelector(
+    state => state.filterList,
+  ).filterOneDepsTitle
   const filterItem = useAppSelector(state => state.filterList.filterItem)
   const selectItem = useAppSelector(state => state.filterList.selectItem)
 
@@ -59,17 +62,25 @@ const BottomSheet: React.FC<Props> = ({list, title}) => {
       useNativeDriver: true,
     }).start()
   }, [showTansY, screenHeight, backOpacity])
-  console.log(filterItem)
 
   const changeValue = (param: SampleStateData) => {
+    console.log(`changeValue ${param}`)
     const item = selectItem[param.key!]
 
     if (param?.list?.length > 0) {
       const list = param.list.filter((d: any) => d.select === item)
       return list[0]?.label
+    } else {
+      // 구현부.... 후
+      return ''
     }
 
     return ''
+  }
+
+  const changeChildValue = (param: any) => {
+    console.log(`changeChildValue => ${param}`)
+    console.log(`changeValue(param) ${changeValue(param)}`)
   }
 
   const handleShowSwipeOut = useCallback(() => {
@@ -86,14 +97,18 @@ const BottomSheet: React.FC<Props> = ({list, title}) => {
           <Animated.View style={{opacity: backOpacity}}>
             <Animated.View style={[{transform: [{translateY: showTansY}]}]}>
               {filterTwoDeps &&
-                list.map((item, idx) => (
-                  <SelectFilter
-                    key={idx}
-                    title={item.label}
-                    list={item.list}
-                    handleOut={handleShowSwipeOut}
-                  />
-                ))}
+                list.map(
+                  (item, idx) =>
+                    filterOneDepsTitle === item.label && (
+                      <SelectFilter
+                        key={idx}
+                        title={item.label}
+                        list={item.list}
+                        handleOut={handleShowSwipeOut}
+                        changeEvent={changeChildValue}
+                      />
+                    ),
+                )}
               <ScrollView style={styles.filterBody}>
                 <View style={{marginBottom: 16}}>
                   <Text style={styles.headTitle} onPress={handleShowSwipeOut}>

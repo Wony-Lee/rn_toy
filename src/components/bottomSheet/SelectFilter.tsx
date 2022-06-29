@@ -10,13 +10,12 @@ import {setFilterTwoDepsSwitch} from '../../reducers/clientSideStateReducer'
 import {SampleListData} from './interface'
 
 interface Props {
-  title?: string
+  changeEvent: (param: any) => void
   handleOut?: () => void
   list?: SampleListData[]
 }
 
-const SelectFilter: React.FC<Props> = ({title, handleOut, list}) => {
-  console.log('select Filter =>', list, ' ==== title >', title)
+const SelectFilter: React.FC<Props> = ({changeEvent, handleOut, list}) => {
   const filterTwoDeps = useAppSelector(state => state.clientSide).filterTwoDeps
   const selectItem = useAppSelector(state => state.filterList).selectItem
   const filterOneDepsTitle = useAppSelector(
@@ -28,28 +27,32 @@ const SelectFilter: React.FC<Props> = ({title, handleOut, list}) => {
   const handleSwipeOn = useCallback(() => {}, [])
   const handleSlideOut = useCallback(
     (title?: string) => {
-      console.log('title=>', title)
+      console.log(`
+     title => ${title}
+      `)
 
-      // dispatch(setFilterSelectItem(title!))
-      dispatch(setFilterTwoDepsSwitch(true))
+      // dispatch(setFilterSelectItem(title))
+      dispatch(setFilterTwoDepsSwitch(false))
+      changeEvent(title)
+      console.log('selectItem', selectItem)
     },
-    [dispatch],
+
+    [dispatch, selectItem],
   )
 
-  useEffect(() => {
-    setFilterOneDepsTitle(title!)
-  }, [title])
-  console.log('filterOneDepsTitle', filterOneDepsTitle)
+  useEffect(() => {}, [])
+
   return (
     <Animated.View style={styles.container}>
       <Text style={styles.header} onPress={handleOut}>
         닫기
       </Text>
+
       {list?.map((item, idx) => (
         <Text
           key={idx}
           style={styles.text}
-          onPress={() => handleSlideOut(title)}>
+          onPress={() => handleSlideOut(item.select)}>
           {item.label}
         </Text>
       ))}
