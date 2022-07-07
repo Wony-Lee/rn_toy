@@ -72,7 +72,7 @@ const BottomSheet: React.FC<Props> = ({list, title}) => {
       return list[0]?.label
     } else {
       // 구현부.... 후
-      return ''
+      return '1'
     }
 
     return ''
@@ -87,6 +87,8 @@ const BottomSheet: React.FC<Props> = ({list, title}) => {
     dispatch(setFilterTwoDepsSwitch(false))
   }, [dispatch])
 
+
+  // git test
   return (
     <>
       <Button title={'ShowIn'} onPress={handleShowIn} />
